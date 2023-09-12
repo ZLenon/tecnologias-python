@@ -1,3 +1,4 @@
+import re
 import time
 import requests
 from parsel import Selector
@@ -37,9 +38,26 @@ def scrape_next_page_link(r):
 
 
 # Req 4
-def scrape_news(html_content):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+def scrape_news(r):
+    x = Selector(text=r)
+    endereco = x.css('link[rel="canonical"]::attr(href)').get()
+    titulo = x.css("h1.entry-title::text").get().strip("\xa0")
+    data = x.css(".meta-date::text").get()
+    escritor = x.css(".author a::text").get()
+    temp_leitura = int(x.css(".meta-reading-time::text").get().split(" ")[0])
+    sumario = x.css(".entry-content p").get()
+    sumario = re.sub("<.*?>", "", sumario).strip()
+    categoria = x.css(".label::text").get()
+    obj_final = {
+        "url": endereco,
+        "title": titulo,
+        "timestamp": data,
+        "writer": escritor,
+        "reading_time": temp_leitura,
+        "summary": sumario,
+        "category": categoria,
+    }
+    return obj_final
 
 
 # Req 5
