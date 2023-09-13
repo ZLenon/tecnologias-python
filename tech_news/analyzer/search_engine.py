@@ -28,6 +28,10 @@ def search_by_date(date):
 
 
 # Req 9
-def search_by_category(category):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+def search_by_category(categoria):
+    noticias = find_news()
+    novas_infos = list()
+    for n in noticias:
+        if categoria.lower() in n["category"].lower():
+            novas_infos.append((n["title"], n["url"]))
+    return novas_infos
