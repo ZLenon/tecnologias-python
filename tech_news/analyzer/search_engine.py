@@ -4,12 +4,12 @@ from tech_news.database import find_news
 # Req 7
 def search_by_title(title):
     print(title)
-    news = find_news()
-    list_news = list()
-    for new in news:
-        if title.lower() in new["title"].lower():
-            list_news.append((new["title"], new["url"]))
-    return list_news
+    noticias = find_news()
+    novas_infos = list()
+    for n in noticias:
+        if title.lower() in n["title"].lower():
+            novas_infos.append((n["title"], n["url"]))
+    return novas_infos
 
 
 # Req 8
